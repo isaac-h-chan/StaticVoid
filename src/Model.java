@@ -65,6 +65,7 @@ public class Model {
 
 	public static void main(String[] args) {
 		Model m = new Model();
+
 		m.setup_game();
 		Scanner s = new Scanner(System.in);
 
@@ -314,6 +315,21 @@ public class Model {
 		return res;
 	}
 
+	public BoardIterator iterator() {
+		return new BoardIterator() {
+
+			private int i;
+
+			public boolean hasNext() {
+				return i < 12;
+			}
+
+			public int next() {
+				return board[i++];
+			}
+
+		};
+	}
 
 	/**
 	 * get the number of undos the player has made this turn
