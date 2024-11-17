@@ -1,3 +1,9 @@
+/**
+ * CS 151 Group Assignment Fall 2024 code
+ * @author Isaac Chan, Vincent Do, Kunal Pradhan
+ * @version 1.0 11/15/2024
+ */
+
 public class Controller {
 
     private Model model;
