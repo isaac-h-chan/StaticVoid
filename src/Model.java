@@ -7,7 +7,8 @@ import java.util.Scanner;
  */
 
 public class Model {
-    
+	//represents the view of the program
+    private View v; 
 	// represent the number of stones in respective player's mancala
 	private int a_score, b_score;
 
@@ -44,7 +45,8 @@ public class Model {
 	// used to keep track of stones picked up for undo functionality
 	private int previous_super_move_count;
 
-	public Model() {
+	public Model(View menu) {
+		v = menu;
 		a_score = 0;
 		b_score = 0;
 
@@ -64,7 +66,10 @@ public class Model {
 	}
 
 	public static void main(String[] args) {
-		Model m = new Model();
+		
+		View v = new View();
+		Model m = new Model(v);
+		Controller c = new Controller(v, m);
 
 		m.setup_game();
 		Scanner s = new Scanner(System.in);
@@ -149,6 +154,8 @@ public class Model {
 		for (int i = 0; i < this.board.length; i++) {
 			this.board[i] = this.starting_stones_per_pit;
 		}
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
 	}
 
 
@@ -210,6 +217,8 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
 
 		this.can_make_move = false;
 	}
@@ -272,7 +281,8 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
-
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
 		this.num_undos++;
 		this.previous_pit_index = -1;
 		this.can_make_move = true;
