@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 
 public class Model {
+	private turnListener listener;
 	//represents the view of the program
     private View v; 
 	// represent the number of stones in respective player's mancala
@@ -139,6 +140,9 @@ public class Model {
 		}
 		return 0;
 	}
+	public void setListener(turnListener t){
+		listener = t;
+	}
 
 
 	/**
@@ -154,8 +158,10 @@ public class Model {
 		for (int i = 0; i < this.board.length; i++) {
 			this.board[i] = this.starting_stones_per_pit;
 		}
+		v.updateUndo(num_undos);
 		v.updateScores(a_score, b_score);
 		v.updatePits(board);
+		v.updateTurn(is_a_turn);
 	}
 
 
@@ -217,10 +223,14 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
-		v.updateScores(a_score, b_score);
-		v.updatePits(board);
+		
 
 		this.can_make_move = false;
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
+		v.updateUndo(num_undos);
+		v.updateTurn(is_a_turn);
+		listener.pauseButton();
 	}
 	
 	
@@ -281,11 +291,15 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
-		v.updateScores(a_score, b_score);
-		v.updatePits(board);
+		
 		this.num_undos++;
 		this.previous_pit_index = -1;
 		this.can_make_move = true;
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
+		v.updateUndo(num_undos);
+		v.updateTurn(is_a_turn);
+		listener.turnChanged();
 	}
 
 	
@@ -301,6 +315,9 @@ public class Model {
 		this.previous_pit_stone_count = 0;
 		this.previous_pit_index = -1;
 		this.num_undos = 0;
+		v.updateTurn(is_a_turn);
+		v.updateUndo(num_undos);
+		listener.turnChanged();
 	}
 
 	/**
@@ -346,6 +363,9 @@ public class Model {
 	 */
 	public int getNumUndos() {
 		return this.num_undos;
+	}
+	public boolean getCanMove(){
+		return this.can_make_move;
 	}
 
 }

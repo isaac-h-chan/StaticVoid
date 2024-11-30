@@ -7,6 +7,7 @@ public class View{
     int[] playerA = new int[6];
     int[] playerB = new int[6];
     private JButton undoButton;
+    private JButton confirmButton;
     private pitButton[] aPicks;
     private pitButton[] bPicks;
     private int bScore = 0;
@@ -23,7 +24,7 @@ public class View{
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center the buttons with some spacing
 
-        JButton confirmButton = new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
         undoButton = new JButton("Undo");
         buttonPanel.add(undoButton);
         buttonPanel.add(confirmButton);
@@ -48,6 +49,9 @@ public class View{
         
 
     }
+    public void updateUndo(int u){
+        panel.setUndo(u);
+    }
     public void updatePics(){
         for(int j = 0; j < 6; j++){
             aPicks[j].setPitPic(new ImageIcon("visualAssets\\Mancala Board Pits\\Mancala Board Pits\\" + playerA[j] +".png"));
@@ -58,6 +62,12 @@ public class View{
     public JButton getUndo(){
         return undoButton;
 
+    }
+    public JButton getConfirm(){
+        return confirmButton;
+    }
+    public void updateTurn(boolean b){
+        panel.setATurn(b);
     }
     
     

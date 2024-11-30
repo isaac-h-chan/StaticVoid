@@ -7,6 +7,8 @@ public class boardPanel extends JPanel{
     private int[] playerB;
     private int aScore;
     private int bScore;
+    private int undo;
+    private boolean aTurn;
 
 
     public boardPanel(pitButton[] aPicks, pitButton[] bPicks, int[] a, int[] b, int asc, int bsc) {
@@ -39,6 +41,13 @@ public class boardPanel extends JPanel{
                 g.setFont(new Font("Arial",Font.BOLD, 27));
                 g.drawString(String.valueOf(bScore), 70, 305);
                 g.drawString(String.valueOf(aScore), 620, 305);
+                g.drawString("Undos left: " + String.valueOf(3 - undo), 50, 500);
+                if(aTurn){
+                    g.drawString("Player A's Turn", 300, 500);
+                }
+                else{
+                    g.drawString("Player B's Turn", 300, 500);
+                }
             }
     // public void setA(ImageIcon[] a){
     //     aPicks = a;
@@ -48,9 +57,11 @@ public class boardPanel extends JPanel{
     // }
     public void setAScore(int a){
         aScore = a;
+        repaint();
     }
     public void setBScore(int b){
         bScore = b;
+        repaint();
     }
     private void setupButtons() {
         this.setLayout(null); // Use absolute positioning
@@ -70,6 +81,15 @@ public class boardPanel extends JPanel{
         this.revalidate(); // Ensure layout is updated
         this.repaint(); // Repaint the container
         System.out.println("setup buttons");
+    }
+    public void setUndo(int u){
+        undo = u;
+        repaint();
+    }
+    public void setATurn(boolean b){
+        aTurn = b;
+        repaint();
+
     }
     
 }
