@@ -1,7 +1,7 @@
 public class Mancala {
     public static void main(String[] args) {
-        View v = new View();
-        Model m = new Model(v);
+        Model m = new Model();
+        View v = new View(m);
         Controller c = new Controller(v, m);
         m.setup_game();
     }
