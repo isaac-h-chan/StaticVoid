@@ -76,14 +76,15 @@ public class Model {
 
 	public static void main(String[] args) {
 
-		Model m = new Model();
-		View v = new View(m);
-		Controller c = new Controller(v, m);
+		/*
+		//Model m = new Model();
+		//View v = new View(m);
+		//Controller c = new Controller(v, m);
 
-		m.setup_game();
+		//m.setup_game();
 		Scanner s = new Scanner(System.in);
 
-		while (m.check_win() == 0) {
+		while (m.check_win() == 1000) {
 			if (m.getisATurn())
 				System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
 			else 
@@ -129,8 +130,11 @@ public class Model {
 			m.pass_turn();
 
 		}
+		System.out.println(m.check_win());
 
 		s.close();
+		*/
+		
 	}
 
 
@@ -141,9 +145,32 @@ public class Model {
 	 *
 	 */
 	public int check_win() {
-		if (this.a_score + this.b_score == 12 * this.starting_stones_per_pit) {
-			return this.a_score - this.b_score;
+		boolean contains_non_zero_pit = false;
+		for (int i = 0; i < 6; i++) {
+			if (this.board[i] > 0)
+				contains_non_zero_pit = true;
 		}
+
+		if (!contains_non_zero_pit) {
+			// count stones left on B's side
+			int b_stones = 0;
+			for (int i = 6; i < 12; i++)
+				b_stones += board[i];
+			return this.a_score - (this.b_score + b_stones);
+		}
+
+		for (int i = 6; i < 12; i++) {
+			if (this.board[i] > 0)
+				contains_non_zero_pit = true;
+		}
+		if (!contains_non_zero_pit) {
+			// count stones left on B's side
+			int a_stones = 0;
+			for (int i = 0; i < 5; i++)
+				a_stones += board[i];
+			return this.a_score + a_stones - this.b_score;
+		}
+
 		return 1000;
 	}
 
