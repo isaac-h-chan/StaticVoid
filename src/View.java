@@ -54,8 +54,8 @@ public class View{
     }
     public void updatePics(){
         for(int j = 0; j < 6; j++){
-            aPicks[j].setPitPic(new ImageIcon("visualAssets\\Mancala Board Pits\\Mancala Board Pits\\" + playerA[j] +".png"));
-            bPicks[j].setPitPic(new ImageIcon("visualAssets\\Mancala Board Pits\\Mancala Board Pits\\" + playerB[j] +".png"));
+            aPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerA[j] +".png"));
+            bPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerB[j] +".png"));
         }
 
     }
