@@ -46,6 +46,10 @@ public class Model {
 	// used to keep track of stones picked up for undo functionality
 	private int previous_super_move_count;
 
+	/**
+	 * Constructor for the Model Class
+	 *
+	 */
 	public Model(View menu) {
 		v = menu;
 		a_score = 0;
@@ -68,14 +72,15 @@ public class Model {
 
 	public static void main(String[] args) {
 		
-		View v = new View();
-		Model m = new Model(v);
-		Controller c = new Controller(v, m);
+		//View v = new View();
+		//Model m = new Model(v);
+		//Controller c = new Controller(v, m);
 
-		m.setup_game();
+		//m.setup_game();
 		Scanner s = new Scanner(System.in);
 
-		while (m.check_win() == 0) {
+		/*
+		while (m.check_win() == 1000) {
 			if (m.getisATurn())
 				System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
 			else 
@@ -121,24 +126,48 @@ public class Model {
 			m.pass_turn();
 
 		}
+		System.out.println(m.check_win());
+		*/
 
 		s.close();
+		
 	}
 
 
 	/**
 	 * returns the which player has won the game
 	 *
-	 * @return 0 - no wins, positive - player A wins, negative - player B wins
+	 * @return 0 - tie, 1000 - no win, positive and less than 1000 - player A wins, negative - player B wins
 	 *
-	 *
-	 * NOTE possible bug is that if there is a tie, it is indistinguishable from a game that has not ended
 	 */
 	public int check_win() {
-		if (this.a_score + this.b_score == 12 * this.starting_stones_per_pit) {
-			return this.a_score - this.b_score;
+		boolean contains_non_zero_pit = false;
+		for (int i = 0; i < 6; i++) {
+			if (this.board[i] > 0)
+				contains_non_zero_pit = true;
 		}
-		return 0;
+
+		if (!contains_non_zero_pit) {
+			// count stones left on B's side
+			int b_stones = 0;
+			for (int i = 6; i < 12; i++)
+				b_stones += board[i];
+			return this.a_score - (this.b_score + b_stones);
+		}
+
+		for (int i = 6; i < 12; i++) {
+			if (this.board[i] > 0)
+				contains_non_zero_pit = true;
+		}
+		if (!contains_non_zero_pit) {
+			// count stones left on B's side
+			int a_stones = 0;
+			for (int i = 0; i < 5; i++)
+				a_stones += board[i];
+			return this.a_score + a_stones - this.b_score;
+		}
+
+		return 1000;
 	}
 	public void setListener(turnListener t){
 		listener = t;
@@ -342,6 +371,9 @@ public class Model {
 		return res;
 	}
 
+	/**
+	 * returns an external BoardIterator for the board State
+	 */
 	public BoardIterator iterator() {
 		return new BoardIterator() {
 
@@ -360,6 +392,8 @@ public class Model {
 
 	/**
 	 * get the number of undos the player has made this turn
+	 *
+	 * @return the number of undos this turn
 	 */
 	public int getNumUndos() {
 		return this.num_undos;
