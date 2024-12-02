@@ -25,7 +25,7 @@ public class boardPanel extends JPanel{
                 super.paintComponent(g);
 
                 // Load the background image
-                ImageIcon backgroundIcon = new ImageIcon("visualAssets\\Mancala_Main_Board.png");
+                ImageIcon backgroundIcon = new ImageIcon("visualAssets/Mancala_Main_Board.png");
                 Image backgroundImg = backgroundIcon.getImage();
                 g.drawImage(backgroundImg, 0, 0, 700, 600, this);
                 for(int i = 0; i < 6; i++){

@@ -37,11 +37,11 @@ public class View{
     public void pitMaker(){
         for(int j = 0; j < 12; j++){
             if(j < 6){
-            aPicks[j] = new pitButton(new ImageIcon("visualAssets\\Mancala Board Pits\\Mancala Board Pits\\" + 0 +".png"));
+            aPicks[j] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + 0 +".png"));
             aPicks[j].setNum(j);
             }
             else{
-                bPicks[j - 6] = new pitButton(new ImageIcon("visualAssets\\Mancala Board Pits\\Mancala Board Pits\\" + 0 +".png"));
+                bPicks[j - 6] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + 0 +".png"));
                 bPicks[j - 6].setNum(j);
 
             }
