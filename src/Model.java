@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 /**
  * CS 151 Group Assignment Fall 2024 code
  * @author Isaac Chan, Vincent Do, Kunal Pradhan 
@@ -8,6 +11,8 @@ import java.util.Scanner;
 
 public class Model {
 	private turnListener listener;
+	private ChangeListener view_listener;
+	
 	//represents the view of the program
     private View v; 
 	// represent the number of stones in respective player's mancala
@@ -50,8 +55,7 @@ public class Model {
 	 * Constructor for the Model Class
 	 *
 	 */
-	public Model(View menu) {
-		v = menu;
+	public Model() {
 		a_score = 0;
 		b_score = 0;
 
@@ -71,15 +75,15 @@ public class Model {
 	}
 
 	public static void main(String[] args) {
-		
-		//View v = new View();
-		//Model m = new Model(v);
+
+		/*
+		//Model m = new Model();
+		//View v = new View(m);
 		//Controller c = new Controller(v, m);
 
 		//m.setup_game();
 		Scanner s = new Scanner(System.in);
 
-		/*
 		while (m.check_win() == 1000) {
 			if (m.getisATurn())
 				System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
@@ -127,9 +131,9 @@ public class Model {
 
 		}
 		System.out.println(m.check_win());
-		*/
 
 		s.close();
+		*/
 		
 	}
 
@@ -169,8 +173,18 @@ public class Model {
 
 		return 1000;
 	}
+
 	public void setListener(turnListener t){
 		listener = t;
+	}
+	
+	/**
+	 * Attach a ChangeListener for the View
+	 *
+	 * @param c the ChangeListener to attach
+	 */
+	public void attach_view_listener(ChangeListener c) {
+		this.view_listener = c;
 	}
 
 
@@ -187,10 +201,7 @@ public class Model {
 		for (int i = 0; i < this.board.length; i++) {
 			this.board[i] = this.starting_stones_per_pit;
 		}
-		v.updateUndo(num_undos);
-		v.updateScores(a_score, b_score);
-		v.updatePits(board);
-		v.updateTurn(is_a_turn);
+		view_listener.stateChanged(new ChangeEvent(this));
 	}
 
 
@@ -255,10 +266,7 @@ public class Model {
 		
 
 		this.can_make_move = false;
-		v.updateScores(a_score, b_score);
-		v.updatePits(board);
-		v.updateUndo(num_undos);
-		v.updateTurn(is_a_turn);
+		view_listener.stateChanged(new ChangeEvent(this));
 		listener.pauseButton();
 	}
 	
@@ -324,10 +332,7 @@ public class Model {
 		this.num_undos++;
 		this.previous_pit_index = -1;
 		this.can_make_move = true;
-		v.updateScores(a_score, b_score);
-		v.updatePits(board);
-		v.updateUndo(num_undos);
-		v.updateTurn(is_a_turn);
+		view_listener.stateChanged(new ChangeEvent(this));
 		listener.turnChanged();
 	}
 
@@ -344,8 +349,7 @@ public class Model {
 		this.previous_pit_stone_count = 0;
 		this.previous_pit_index = -1;
 		this.num_undos = 0;
-		v.updateTurn(is_a_turn);
-		v.updateUndo(num_undos);
+		view_listener.stateChanged(new ChangeEvent(this));
 		listener.turnChanged();
 	}
 
@@ -398,8 +402,38 @@ public class Model {
 	public int getNumUndos() {
 		return this.num_undos;
 	}
+
+
 	public boolean getCanMove(){
 		return this.can_make_move;
+	}
+
+	/**
+	 * get the score of player A
+	 *
+	 * @return the score of A
+	 */
+	public int getAScore() {
+		return this.a_score;
+	}
+
+	/**
+	 * get the score of player B
+	 *
+	 * @return the score of B
+	 */
+	public int getBScore() {
+		return this.b_score;
+	}
+
+	/**
+	 * returns a copy of the board
+	 */
+	public int[] getBoard() {
+		int[] copy = new int[12];
+		for (int i = 0; i < 12; i++)
+			copy[i] = this.board[i];
+		return copy;
 	}
 
 }

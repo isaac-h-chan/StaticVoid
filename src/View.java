@@ -16,7 +16,10 @@ public class View{
     private pitButton[] bPicks;
     private int bScore = 0;
     private int aScore = 0;
-    public View(){
+	private Model m;
+
+    public View(Model m){
+		this.m = m;
         JFrame frame = new JFrame();
         JPanel gamePanel = new JPanel(new BorderLayout());
         card = new CardLayout();
@@ -44,9 +47,21 @@ public class View{
         // frame.add(buttonPanel, BorderLayout.SOUTH);
         // frame.add(panel);
         frame.add(mainPanel);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+        frame.add(panel);
+
+		// attach changelistener to Model
+		m.attach_view_listener((event) -> {
+			updateScores(this.m.getAScore(), this.m.getBScore());
+			updatePits(this.m.getBoard());
+			updateUndo(this.m.getNumUndos());
+			updateTurn(this.m.getisATurn());
+		});
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
     public void pitMaker(){
         for(int j = 0; j < 12; j++){
             if(j < 6){
@@ -100,11 +115,6 @@ public class View{
         panel.setATurn(b);
     }
     
-    
-    public static void main(String[] args) {
-        View v = new View();
-        
-    }
     public void updateScores(int a, int b){
         aScore = a;
         bScore = b;
