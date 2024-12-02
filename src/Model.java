@@ -44,6 +44,10 @@ public class Model {
 	// used to keep track of stones picked up for undo functionality
 	private int previous_super_move_count;
 
+	/**
+	 * Constructor for the Model Class
+	 *
+	 */
 	public Model() {
 		a_score = 0;
 		b_score = 0;
@@ -315,6 +319,9 @@ public class Model {
 		return res;
 	}
 
+	/**
+	 * returns an external BoardIterator for the board State
+	 */
 	public BoardIterator iterator() {
 		return new BoardIterator() {
 
@@ -333,6 +340,8 @@ public class Model {
 
 	/**
 	 * get the number of undos the player has made this turn
+	 *
+	 * @return the number of undos this turn
 	 */
 	public int getNumUndos() {
 		return this.num_undos;
