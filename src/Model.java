@@ -170,7 +170,7 @@ public class Model {
 				a_stones += board[i];
 			return this.a_score + a_stones - this.b_score;
 		}
-
+		//view_listener.stateChanged(new ChangeEvent(this));
 		return 1000;
 	}
 
@@ -434,6 +434,9 @@ public class Model {
 		for (int i = 0; i < 12; i++)
 			copy[i] = this.board[i];
 		return copy;
+	}
+	public void setStartingPit(int n){
+		this.starting_stones_per_pit = n;
 	}
 
 }

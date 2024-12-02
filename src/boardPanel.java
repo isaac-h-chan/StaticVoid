@@ -9,6 +9,7 @@ public class boardPanel extends JPanel{
     private int bScore;
     private int undo;
     private boolean aTurn;
+    private String win;
 
 
     public boardPanel(pitButton[] aPicks, pitButton[] bPicks, int[] a, int[] b, int asc, int bsc) {
@@ -47,6 +48,9 @@ public class boardPanel extends JPanel{
                 }
                 else{
                     g.drawString("Player B's Turn", 300, 500);
+                }
+                if(win != null){
+                    g.drawString(win, 275, 600);
                 }
             }
     // public void setA(ImageIcon[] a){
@@ -90,6 +94,17 @@ public class boardPanel extends JPanel{
         aTurn = b;
         repaint();
 
+    }
+    public void setWin(int n){
+        if(n > 0 && n < 1000){
+            win = "Player A won";
+        }
+        else if(n < 0 ){
+            win = "Player B won";
+        }
+        
+        
+        repaint();
     }
     
 }

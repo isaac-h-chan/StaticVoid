@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class View{
     private JPanel mainPanel;
     private CardLayout card;
+    private titlePanel title;
     boardPanel panel;
     int[] playerA = new int[6];
     int[] playerB = new int[6];
@@ -25,7 +26,7 @@ public class View{
         card = new CardLayout();
         mainPanel = new JPanel(card);
         startButton = new JButton("Start");
-        titlePanel title = new titlePanel(startButton, card);
+        title = new titlePanel(startButton, card);
         frame.setSize(750, 750);
         aPicks = new pitButton[6];
         bPicks = new pitButton[6];
@@ -47,8 +48,6 @@ public class View{
         // frame.add(buttonPanel, BorderLayout.SOUTH);
         // frame.add(panel);
         frame.add(mainPanel);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
-        frame.add(panel);
 
 		// attach changelistener to Model
 		m.attach_view_listener((event) -> {
@@ -56,6 +55,8 @@ public class View{
 			updatePits(this.m.getBoard());
 			updateUndo(this.m.getNumUndos());
 			updateTurn(this.m.getisATurn());
+            setupGame();
+            winCondition(this.m.check_win());
 		});
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,6 +87,12 @@ public class View{
             bPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerB[j] +".png"));
         }
 
+    }
+    public void setupGame(){
+        card.show(mainPanel, "game");
+    }
+    public int getOptions(){
+        return title.getOptions();
     }
     private JPanel createTitleScreen() {
         JPanel titlePanel = new JPanel();
@@ -144,6 +151,9 @@ public class View{
     }
     public JButton getStartButton(){
         return startButton;
+    }
+    public void winCondition(int check){
+        panel.setWin(check);
     }
    
 }

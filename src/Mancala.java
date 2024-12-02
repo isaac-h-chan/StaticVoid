@@ -3,7 +3,6 @@ public class Mancala {
         Model m = new Model();
         View v = new View(m);
         Controller c = new Controller(v, m);
-        m.setup_game();
     }
     
 }

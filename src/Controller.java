@@ -17,6 +17,11 @@ class Controller implements turnListener{
             m.pass_turn();
             System.out.println("Confirmed pressed");
         });
+        v.getStartButton().addActionListener(e -> {
+            int set = v.getOptions();
+            m.setStartingPit(set);
+            m.setup_game();
+        });
         updateButtons();
     
     }
