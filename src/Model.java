@@ -146,28 +146,33 @@ public class Model {
 	 */
 	public int check_win() {
 		boolean contains_non_zero_pit = false;
-		for (int i = 0; i < 6; i++) {
-			if (this.board[i] > 0)
+		int i = 0;
+		while (!contains_non_zero_pit && i < 6) {
+			if (this.board[i++] > 0)
 				contains_non_zero_pit = true;
 		}
 
 		if (!contains_non_zero_pit) {
 			// count stones left on B's side
 			int b_stones = 0;
-			for (int i = 6; i < 12; i++)
-				b_stones += board[i];
+			for (int j = 6; j < 12; j++)
+				b_stones += board[j];
 			return this.a_score - (this.b_score + b_stones);
 		}
 
-		for (int i = 6; i < 12; i++) {
-			if (this.board[i] > 0)
+		contains_non_zero_pit = false;
+		i = 6;
+
+		while (!contains_non_zero_pit && i < 12) {
+			if (this.board[i++] > 0)
 				contains_non_zero_pit = true;
 		}
+
 		if (!contains_non_zero_pit) {
 			// count stones left on B's side
 			int a_stones = 0;
-			for (int i = 0; i < 5; i++)
-				a_stones += board[i];
+			for (int j = 0; j < 6; j++)
+				a_stones += board[j];
 			return this.a_score + a_stones - this.b_score;
 		}
 		//view_listener.stateChanged(new ChangeEvent(this));
