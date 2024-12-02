@@ -127,16 +127,14 @@ public class Model {
 	/**
 	 * returns the which player has won the game
 	 *
-	 * @return 0 - no wins, positive - player A wins, negative - player B wins
+	 * @return 0 - tie, 1000 - no win, positive and less than 1000 - player A wins, negative - player B wins
 	 *
-	 *
-	 * NOTE possible bug is that if there is a tie, it is indistinguishable from a game that has not ended
 	 */
 	public int check_win() {
 		if (this.a_score + this.b_score == 12 * this.starting_stones_per_pit) {
 			return this.a_score - this.b_score;
 		}
-		return 0;
+		return 1000;
 	}
 
 
