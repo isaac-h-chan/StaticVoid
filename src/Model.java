@@ -7,7 +7,9 @@ import java.util.Scanner;
  */
 
 public class Model {
-    
+	private turnListener listener;
+	//represents the view of the program
+    private View v; 
 	// represent the number of stones in respective player's mancala
 	private int a_score, b_score;
 
@@ -48,7 +50,8 @@ public class Model {
 	 * Constructor for the Model Class
 	 *
 	 */
-	public Model() {
+	public Model(View menu) {
+		v = menu;
 		a_score = 0;
 		b_score = 0;
 
@@ -68,7 +71,10 @@ public class Model {
 	}
 
 	public static void main(String[] args) {
-		Model m = new Model();
+		
+		View v = new View();
+		Model m = new Model(v);
+		Controller c = new Controller(v, m);
 
 		m.setup_game();
 		Scanner s = new Scanner(System.in);
@@ -136,6 +142,9 @@ public class Model {
 		}
 		return 1000;
 	}
+	public void setListener(turnListener t){
+		listener = t;
+	}
 
 
 	/**
@@ -151,6 +160,10 @@ public class Model {
 		for (int i = 0; i < this.board.length; i++) {
 			this.board[i] = this.starting_stones_per_pit;
 		}
+		v.updateUndo(num_undos);
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
+		v.updateTurn(is_a_turn);
 	}
 
 
@@ -212,8 +225,14 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
+		
 
 		this.can_make_move = false;
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
+		v.updateUndo(num_undos);
+		v.updateTurn(is_a_turn);
+		listener.pauseButton();
 	}
 	
 	
@@ -274,10 +293,15 @@ public class Model {
 
 			i = (i + 1) % 12;
 		}
-
+		
 		this.num_undos++;
 		this.previous_pit_index = -1;
 		this.can_make_move = true;
+		v.updateScores(a_score, b_score);
+		v.updatePits(board);
+		v.updateUndo(num_undos);
+		v.updateTurn(is_a_turn);
+		listener.turnChanged();
 	}
 
 	
@@ -293,6 +317,9 @@ public class Model {
 		this.previous_pit_stone_count = 0;
 		this.previous_pit_index = -1;
 		this.num_undos = 0;
+		v.updateTurn(is_a_turn);
+		v.updateUndo(num_undos);
+		listener.turnChanged();
 	}
 
 	/**
@@ -343,6 +370,9 @@ public class Model {
 	 */
 	public int getNumUndos() {
 		return this.num_undos;
+	}
+	public boolean getCanMove(){
+		return this.can_make_move;
 	}
 
 }
