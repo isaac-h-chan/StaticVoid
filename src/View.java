@@ -1,11 +1,15 @@
+import javax.imageio.plugins.tiff.TIFFDirectory;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class View{
+    private JPanel mainPanel;
+    private CardLayout card;
     boardPanel panel;
     int[] playerA = new int[6];
     int[] playerB = new int[6];
+    private JButton startButton;
     private JButton undoButton;
     private JButton confirmButton;
     private pitButton[] aPicks;
@@ -14,6 +18,11 @@ public class View{
     private int aScore = 0;
     public View(){
         JFrame frame = new JFrame();
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        card = new CardLayout();
+        mainPanel = new JPanel(card);
+        startButton = new JButton("Start");
+        titlePanel title = new titlePanel(startButton, card);
         frame.setSize(750, 750);
         aPicks = new pitButton[6];
         bPicks = new pitButton[6];
@@ -23,14 +32,18 @@ public class View{
         panel = new boardPanel(aPicks, bPicks, playerA, playerB, aScore, bScore);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Center the buttons with some spacing
-
+        gamePanel.add(panel, BorderLayout.CENTER);
+        gamePanel.add(buttonPanel, BorderLayout.SOUTH);
         confirmButton = new JButton("Confirm");
         undoButton = new JButton("Undo");
         buttonPanel.add(undoButton);
         buttonPanel.add(confirmButton);
+        mainPanel.add(title, "titleScreen");
+        mainPanel.add(gamePanel, "game");
         
-        frame.add(buttonPanel, BorderLayout.SOUTH);
-        frame.add(panel);
+        // frame.add(buttonPanel, BorderLayout.SOUTH);
+        // frame.add(panel);
+        frame.add(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -58,6 +71,23 @@ public class View{
             bPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerB[j] +".png"));
         }
 
+    }
+    private JPanel createTitleScreen() {
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BorderLayout());
+        
+        JLabel titleLabel = new JLabel("Mancala Game", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titlePanel.add(titleLabel, BorderLayout.CENTER);
+
+        JButton startButton = new JButton("Start Game");
+        startButton.addActionListener(e -> {
+            System.out.println("game start");
+            card.show(mainPanel, "game");
+        });
+        titlePanel.add(startButton, BorderLayout.SOUTH);
+        
+        return titlePanel;
     }
     public JButton getUndo(){
         return undoButton;
@@ -101,6 +131,9 @@ public class View{
     }
     public pitButton[] getBButtons(){
         return bPicks;
+    }
+    public JButton getStartButton(){
+        return startButton;
     }
    
 }
