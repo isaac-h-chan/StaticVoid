@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.event.ChangeEvent;
@@ -147,6 +148,7 @@ public class Model {
 	public int check_win() {
 		boolean contains_non_zero_pit = false;
 		int i = 0;
+		System.out.println(Arrays.toString(board));
 		while (!contains_non_zero_pit && i < 6) {
 			if (this.board[i++] > 0)
 				contains_non_zero_pit = true;

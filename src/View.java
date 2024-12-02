@@ -152,6 +152,7 @@ public class View{
     public JButton getStartButton(){
         return startButton;
     }
+
     public void winCondition(int check){
         panel.setWin(check);
     }

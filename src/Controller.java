@@ -3,9 +3,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 class Controller implements turnListener{
+	private boolean isSetup;
     private Model m;
     private View v; 
     public Controller(View view, Model real){
+		this.isSetup = false;
         v = view;
         m = real;
         m.setListener(this);
@@ -21,6 +23,7 @@ class Controller implements turnListener{
             int set = v.getOptions();
             m.setStartingPit(set);
             m.setup_game();
+			this.isSetup = true;
         });
         updateButtons();
     
@@ -28,6 +31,23 @@ class Controller implements turnListener{
     
     public void updateButtons(){
         System.out.println("update Buttons Called");
+
+		// check if a win has occured, if yes then remove all pit buttons to not take input
+		// and then return early
+		if (isSetup && m.check_win() != 1000) {
+			pitButton[] tempA = v.getAButtons();
+			pitButton[] tempB = v.getBButtons();
+			for (int i = 0; i < 6; i++) {
+				for(ActionListener a : tempA[i].getActionListeners()){
+					tempA[i].removeActionListener(a);
+				}
+				for(ActionListener b : tempB[i].getActionListeners()){
+					tempA[i].removeActionListener(b);
+				}
+			} 
+			return;
+		}
+
         pitButton[] tempA = v.getAButtons();
         
         for(int i = 0; i < 6; i ++){
@@ -59,8 +79,8 @@ class Controller implements turnListener{
             System.out.println(m.getCanMove());
         }
         }
-
     }
+
 
     @Override
     public void turnChanged() {
@@ -86,6 +106,5 @@ class Controller implements turnListener{
         }
 
     }
-
 
 }
