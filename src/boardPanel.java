@@ -10,6 +10,7 @@ public class boardPanel extends JPanel{
     private int undo;
     private boolean aTurn;
     private String win;
+    private boardDesignStrategy board;
 
 
     public boardPanel(pitButton[] aPicks, pitButton[] bPicks, int[] a, int[] b, int asc, int bsc) {
@@ -27,6 +28,11 @@ public class boardPanel extends JPanel{
 
                 // Load the background image
                 ImageIcon backgroundIcon = new ImageIcon("visualAssets/Mancala_Main_Board.png");
+                if(board != null){
+                    backgroundIcon = board.getBoardDesign();
+
+                }
+                
                 Image backgroundImg = backgroundIcon.getImage();
                 g.drawImage(backgroundImg, 0, 0, 700, 600, this);
                 for(int i = 0; i < 6; i++){
@@ -59,6 +65,9 @@ public class boardPanel extends JPanel{
     // public void setB(ImageIcon[] b){
     //     bPicks = b;
     // }
+    public void setBoard(boardDesignStrategy b){
+        board = b;
+    }
     public void setAScore(int a){
         aScore = a;
         repaint();

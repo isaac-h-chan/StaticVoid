@@ -159,6 +159,7 @@ public class Model {
 			int b_stones = 0;
 			for (int j = 6; j < 12; j++)
 				b_stones += board[j];
+			//b_score += b_stones;
 			return this.a_score - (this.b_score + b_stones);
 		}
 
@@ -175,6 +176,7 @@ public class Model {
 			int a_stones = 0;
 			for (int j = 0; j < 6; j++)
 				a_stones += board[j];
+			//a_score += a_stones;
 			return this.a_score + a_stones - this.b_score;
 		}
 		//view_listener.stateChanged(new ChangeEvent(this));

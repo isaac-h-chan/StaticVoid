@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class View{
+    private boardDesignStrategy design;
     private JPanel mainPanel;
     private CardLayout card;
     private titlePanel title;
@@ -66,11 +67,11 @@ public class View{
     public void pitMaker(){
         for(int j = 0; j < 12; j++){
             if(j < 6){
-            aPicks[j] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + 0 +".png"));
+            aPicks[j] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/0.png"));
             aPicks[j].setNum(j);
             }
             else{
-                bPicks[j - 6] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + 0 +".png"));
+                bPicks[j - 6] = new pitButton(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/0.png"));
                 bPicks[j - 6].setNum(j);
 
             }
@@ -78,13 +79,18 @@ public class View{
         
 
     }
+    public void setDesign(boardDesignStrategy b){
+        design = b;
+        panel.setBoard(b);
+        //updatePits(this.m.getBoard());
+    }
     public void updateUndo(int u){
         panel.setUndo(u);
     }
     public void updatePics(){
         for(int j = 0; j < 6; j++){
-            aPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerA[j] +".png"));
-            bPicks[j].setPitPic(new ImageIcon("visualAssets/Mancala Board Pits/Mancala Board Pits/" + playerB[j] +".png"));
+            aPicks[j].setPitPic(new ImageIcon(design.getPitDesignPath(playerA[j])));
+            bPicks[j].setPitPic(new ImageIcon(design.getPitDesignPath(playerB[j])));
         }
 
     }
@@ -93,6 +99,9 @@ public class View{
     }
     public int getOptions(){
         return title.getOptions();
+    }
+    public String getDesign(){
+        return title.getDesign();
     }
     private JPanel createTitleScreen() {
         JPanel titlePanel = new JPanel();

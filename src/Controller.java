@@ -22,6 +22,12 @@ class Controller implements turnListener{
         v.getStartButton().addActionListener(e -> {
             int set = v.getOptions();
             m.setStartingPit(set);
+            if(v.getDesign().equals("Brown")){
+                v.setDesign(new brownDesign());
+            }
+            else{
+                v.setDesign(new beigeDesign());
+            }
             m.setup_game();
 			this.isSetup = true;
         });
@@ -45,6 +51,7 @@ class Controller implements turnListener{
 					tempA[i].removeActionListener(b);
 				}
 			} 
+            System.out.println(m.getAScore() + " " + m.getBScore());
 			return;
 		}
 
