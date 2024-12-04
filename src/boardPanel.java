@@ -1,5 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+/**
+ * CS 151 Group Assignment Fall 2024 code
+ * @author Isaac Chan, Vincent Do, Kunal Pradhan 
+ * @version 1.0 11/15/2024
+ */
+/**
+ * This class will implement the board for Mancala with GUI for pit marble count, 
+ * player score count, which turn it is, and undos left it implements JPanel
+ */
 public class boardPanel extends JPanel{
     private pitButton[] aPicks;
     private pitButton[] bPicks;
@@ -11,8 +20,15 @@ public class boardPanel extends JPanel{
     private boolean aTurn;
     private String win;
     private boardDesignStrategy board;
-
-
+    /**
+     * This will create a board panel object for the board of mancala and pits in place
+     * @param aPicks - array of Player A's pitButtons
+     * @param bPicks - array of Player B's pitButtons
+     * @param a - array of count of marbles in Player A's pits
+     * @param b - array of count of marbles in Player B's pits
+     * @param asc - int of Player A's score
+     * @param bsc - int of Player B's score
+     */
     public boardPanel(pitButton[] aPicks, pitButton[] bPicks, int[] a, int[] b, int asc, int bsc) {
         this.aPicks = aPicks;
         this.bPicks = bPicks;
@@ -22,7 +38,10 @@ public class boardPanel extends JPanel{
         bScore = bsc;
         setupButtons();
     }
-
+   /**
+    * This will paint the panel for the macala board and game
+    * @param g - Graphics needed to paint this boardPanel
+    */
     protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
@@ -59,23 +78,32 @@ public class boardPanel extends JPanel{
                     g.drawString(win, 275, 600);
                 }
             }
-    // public void setA(ImageIcon[] a){
-    //     aPicks = a;
-    // }
-    // public void setB(ImageIcon[] b){
-    //     bPicks = b;
-    // }
+    /**
+     * This will set the boardDesignStrategy this boardPanel will be using
+     * @param b - a boardDesignStrategy for either brown or beige
+     */
     public void setBoard(boardDesignStrategy b){
         board = b;
     }
+    /**
+     * This will set the current value of recorded A's Score
+     * @param a - A's Score
+     */
     public void setAScore(int a){
         aScore = a;
         repaint();
     }
+    /**
+     * This will set the current value of recorded B's Score
+     * @param b - B's Score
+     */
     public void setBScore(int b){
         bScore = b;
         repaint();
     }
+    /**
+     * This is used to setup pitButtons in the correct location
+     */
     private void setupButtons() {
         this.setLayout(null); // Use absolute positioning
         for (int i = 0; i < 6; i++) {
@@ -95,15 +123,27 @@ public class boardPanel extends JPanel{
         this.repaint(); // Repaint the container
         System.out.println("setup buttons");
     }
+    /**
+     * This will set the recorded amount of undo's a player has
+     * @param u - undos left for player
+     */
     public void setUndo(int u){
         undo = u;
         repaint();
     }
+    /**
+     * This will set the boolean of whether or not it is Player A's turn
+     * @param b - true if A's turn False if B's turn
+     */
     public void setATurn(boolean b){
         aTurn = b;
         repaint();
 
     }
+    /**
+     * Sets the win string to something if n is less than 1000
+     * @param n - an Integer holding a value for win condition
+     */
     public void setWin(int n){
         if(n > 0 && n < 1000){
             win = "Player A won";

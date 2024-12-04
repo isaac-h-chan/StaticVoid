@@ -1,9 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+/**
+ * CS 151 Group Assignment Fall 2024 code
+ * @author Isaac Chan, Vincent Do, Kunal Pradhan 
+ * @version 1.0 11/15/2024
+ */
+/**
+ * This class a JPanel that will act as our title screen of our mancala program
+ */
 public class titlePanel extends JPanel{
     private JButton start;
     private JComboBox<Integer> options;
     private JComboBox<String> design;
+    /**
+     * This is the Constructor for titlePanel
+     * @param s - This is the Start button
+     * @param c - this is the Card Layout used to switch screens of game
+     */
     public titlePanel(JButton s, CardLayout c){
         start = s;
         
@@ -58,9 +71,17 @@ public class titlePanel extends JPanel{
        
 
     }
+    /**
+     * Will return the int in the options JComboBox that represents the number of marbles in starting pit
+     * @return - number of marbles in starting pit
+     */
     public int getOptions(){
         return (int) options.getSelectedItem();
     }
+    /**
+     * This will return the string in the design JComboBox
+     * @return - string in design JComboBox
+     */
     public String getDesign(){
         return (String) design.getSelectedItem();
     }

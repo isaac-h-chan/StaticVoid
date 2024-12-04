@@ -9,7 +9,9 @@ import javax.swing.event.ChangeListener;
  * @author Isaac Chan, Vincent Do, Kunal Pradhan 
  * @version 1.0 11/15/2024
  */
-
+/**
+ * This is the Model class containing the game logic for mancala
+ */
 public class Model {
 	private turnListener listener;
 	private ChangeListener view_listener;
@@ -75,69 +77,7 @@ public class Model {
 		previous_pit_stone_count = 4;
 	}
 
-	public static void main(String[] args) {
-
-		/*
-		//Model m = new Model();
-		//View v = new View(m);
-		//Controller c = new Controller(v, m);
-
-		//m.setup_game();
-		Scanner s = new Scanner(System.in);
-
-		while (m.check_win() == 1000) {
-			if (m.getisATurn())
-				System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
-			else 
-				System.out.println("Player B Turn (" + m.getNumUndos() + " undos)");
-			System.out.println(m);
-
-			boolean confirmed_move = false;
-			while (!confirmed_move) {
-				System.out.println("Please enter a index to move (0-11 starting from bottom left and clockwise)");
-				int index = s.nextInt();
-
-				while (index > 11 || index < 0)
-					index = s.nextInt();
-
-				m.make_move(index);
-				if (m.getisATurn())
-					System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
-				else 
-					System.out.println("Player B Turn (" + m.getNumUndos() + " undos)");
-				System.out.println(m);
-
-				System.out.println("Confirm move (Y) or Undo move (N)?");
-				String choice = s.nextLine().toLowerCase();
-
-				while (!choice.equals("y") && !choice.equals("n"))
-					choice = s.nextLine().toLowerCase();
-
-				if (choice.equals("n") && m.getNumUndos() < 3) {
-					m.undo_move();
-				}
-				else {
-					confirmed_move = true;
-				}
-
-				if (m.getisATurn())
-					System.out.println("Player A Turn (" + m.getNumUndos() + " undos)");
-				else 
-					System.out.println("Player B Turn (" + m.getNumUndos() + " undos)");
-				System.out.println(m);
-
-			}
-			
-			m.pass_turn();
-
-		}
-		System.out.println(m.check_win());
-
-		s.close();
-		*/
-		
-	}
-
+	
 
 	/**
 	 * returns the which player has won the game
@@ -384,24 +324,8 @@ public class Model {
 		return res;
 	}
 
-	/**
-	 * returns an external BoardIterator for the board State
-	 */
-	public BoardIterator iterator() {
-		return new BoardIterator() {
 
-			private int i;
-
-			public boolean hasNext() {
-				return i < 12;
-			}
-
-			public int next() {
-				return board[i++];
-			}
-
-		};
-	}
+	
 
 	/**
 	 * get the number of undos the player has made this turn

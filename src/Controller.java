@@ -1,11 +1,24 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
+
+/**
+ * CS 151 Group Assignment Fall 2024 code
+ * @author Isaac Chan, Vincent Do, Kunal Pradhan 
+ * @version 1.0 11/15/2024
+ */
+/**
+ * Controller for MVC pattern implements the action of all the buttons on the game
+ */
 class Controller implements turnListener{
 	private boolean isSetup;
     private Model m;
     private View v; 
+    /**
+     * This will create a Controller object that initializes all the buttons in View
+     * @param view - A View object
+     * @param real - A Model object
+     */
     public Controller(View view, Model real){
 		this.isSetup = false;
         v = view;
@@ -34,7 +47,9 @@ class Controller implements turnListener{
         updateButtons();
     
     }
-    
+    /**
+     * This will update the current pitButtons action depending on who's turn it is 
+     */
     public void updateButtons(){
         System.out.println("update Buttons Called");
 
@@ -90,6 +105,9 @@ class Controller implements turnListener{
 
 
     @Override
+    /**
+     * This is the turnLister that is implemented to call updateButtons() when a turn is changed
+     */
     public void turnChanged() {
         // TODO Auto-generated method stub
        this.updateButtons();
@@ -97,6 +115,10 @@ class Controller implements turnListener{
     }
 
     @Override
+    /**
+     * This is used to remove the functionality of all pitButtons in cases 
+     * such as in between a move choosing whether to confirm or undo
+     */
     public void pauseButton() {
         System.out.println("pause Buttons Called");
         pitButton[] tempA = v.getAButtons();
